@@ -1,0 +1,13 @@
+
+
+/* MultiStep Progres Bar*/
+.nav-pills .nav-link {
+    border-radius: 0; /* Menghilangkan sudut melengkung pada link */
+}
+
+.nav-pills .nav-link.active {
+    background-color: #007bff !important; /* Warna latar belakang aktif */
+    color: #fff !important; /* Warna teks pada aktif */
+}
+
+
