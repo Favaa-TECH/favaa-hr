@@ -15,6 +15,7 @@ class Master extends Component
     use WithPagination;
 
     public $showCreatedPositionForm = false;
+    public $editMode = false;
 
     public function showForm()
     {
@@ -24,6 +25,7 @@ class Master extends Component
     public function closeForm()
     {
         $this->showCreatedPositionForm = false;
+        $this->reset();
     }
 
 
@@ -43,6 +45,32 @@ class Master extends Component
             'message' => 'Data ' . $this->position_name . ' berhasil ditambahkan'
         ]);
         $this->reset();
+    }
+    public $position_id;
+    public function editPosition($position_id)
+    {
+        $this->showForm();
+        $this->editMode = true;
+        $this->position_id = $position_id;
+        $position = Position::findOrFail($position_id);
+        $this->position_name = $position->name;
+        $this->position_description = $position->description;
+    }
+
+    public function updatePosition()
+    {
+        $this->validate();
+        $position = Position::findOrFail($this->position_id);
+        $position->update([
+            'name' => $this->position_name,
+            'description' => $this->position_description,
+        ]);
+        $this->dispatch('success', [
+            'message' => 'Data ' . $this->position_name . ' berhasil diubah'
+        ]);
+        $this->reset();
+        $this->editMode = false;
+        $this->closeForm();
     }
 
     public function deletePosition($position_id)

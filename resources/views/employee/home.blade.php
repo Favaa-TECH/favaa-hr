@@ -103,8 +103,9 @@
 
         </div>
         <div class="row mb-4">
+
             <div class="col-sm-12 d-flex ">
-                <img src="https://www.mecgale.com/wp-content/uploads/2017/08/dummy-profile.png" alt=""
+                <img src="{{ asset('storage/' . $userEmployee->photo) }}" alt=""
                     class=" me-2 rounded-circle border-2 border-white" width="45" height="45">
                 <div class="d-flex flex-column justify-content-center">
 

@@ -1,6 +1,5 @@
 @push('additional-css')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
 @endpush
 <div>
     <main class="main-content position-relative border-radius-lg ">
@@ -99,12 +98,11 @@
                             <h6> Jabatan</h6>
 
                             <div class="p-0">
-                                @if($showCreatedPositionForm == false)
-
-                                <button wire:click="showForm" class="btn btn-block btn-sm bg-gradient-info mb-3"><i
-                                    class="fa-solid fa-user-doctor fa-2x me-1"></i><i
-                                    class="fa-regular fa-plus"></i>
-                                </button>
+                                @if ($showCreatedPositionForm == false)
+                                    <button wire:click="showForm" class="btn btn-block btn-sm bg-gradient-info mb-3"><i
+                                            class="fa-solid fa-user-doctor fa-2x me-1"></i><i
+                                            class="fa-regular fa-plus"></i>
+                                    </button>
                                 @endif
 
 
@@ -114,46 +112,61 @@
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             @if ($showCreatedPositionForm)
-                            <div class="container mt-3">
+                                <div class="container mt-3">
 
-                                <form class="form text-left w-50">
+                                    <form class="form text-left w-50">
 
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-12">
-                                            <label>Nama Jabatan</label>
-                                            <div class="input-group ">
-                                                <input type="text" class="form-control @error('position_name')
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-12">
+                                                <label>Nama Jabatan</label>
+                                                <div class="input-group ">
+                                                    <input type="text"
+                                                        class="form-control @error('position_name')
                                                     is-invalid
-                                                @enderror" placeholder="Nama Jabatan"
-                                                    wire:model="position_name">
+                                                @enderror"
+                                                        placeholder="Nama Jabatan" wire:model="position_name">
+                                                </div>
+                                                @error('position_name')
+                                                    <small class="text-danger mb-3">{{ $message }}</small>
+                                                @enderror
                                             </div>
-                                            @error('position_name')
-                                                <small class="text-danger mb-3">{{ $message }}</small>
-                                            @enderror
-                                        </div>
-                                        <div class="col-sm-12 col-md-12">
-                                            <label>Deskripsi</label>
-                                            <div class="input-group ">
-                                                <textarea class="form-control @error('position_name')
+                                            <div class="col-sm-12 col-md-12">
+                                                <label>Deskripsi</label>
+                                                <div class="input-group ">
+                                                    <textarea
+                                                        class="form-control @error('position_name')
                                                 is-invalid
-                                            @enderror" placeholder="Deskripsi" aria-label="Deskripsi" wire:model="position_description"></textarea>
+                                            @enderror"
+                                                        placeholder="Deskripsi" aria-label="Deskripsi" wire:model="position_description"></textarea>
+                                                </div>
+                                                @error('position_description')
+                                                    <small class="text-danger mb-3">{{ $message }}</small>
+                                                @enderror
                                             </div>
-                                            @error('position_description')
-                                                <small class="text-danger mb-3">{{ $message }}</small>
-                                            @enderror
+
                                         </div>
 
-                                    </div>
 
+                                        <div class="text-end">
+                                            @if ($editMode == true)
+                                                <button wire:click.prevent="updatePosition" type="submit"
+                                                    class="btn btn-sm  bg-gradient-primary btn-lg  mt-4 mb-0">
+                                                    Update
+                                                </button>
+                                            @else
+                                                <button wire:click.prevent="createPosition" type="submit"
+                                                    class="btn btn-sm  bg-gradient-primary btn-lg  mt-4 mb-0">
+                                                    Save
+                                                </button>
+                                            @endif
+                                            <button wire:click.prevent="closeForm" type="submit"
+                                                class="btn btn-sm  bg-gradient-secondary btn-lg  mt-4 mb-0">
+                                                Cancel
+                                            </button>
 
-                                    <div class="text-end">
-                                        <button wire:click.prevent="createPosition" type="submit"
-                                            class="btn btn-sm  bg-gradient-primary btn-lg  mt-4 mb-0">
-                                            Save
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             @endif
                             <div class="table-responsive p-0">
                                 <table class="table table-hover justify-content-center mb-0">
@@ -198,12 +211,11 @@
 
                                                         <button wire:click="deletePosition({{ $position->id }})"
                                                             class="badge badge-sm bg-gradient-danger text-white border-0 me-2"
-                                                            style="color: inherit"
-                                                           >
+                                                            style="color: inherit">
                                                             <i class="fa-solid fa-trash"></i></button>
 
 
-                                                        <button
+                                                        <button wire:click="editPosition({{ $position->id }})"
                                                             class="badge badge-sm bg-gradient-success text-white border-0"
                                                             style="color: inherit"><i
                                                                 class="fa-sharp fa-solid fa-pen-to-square"></i></button>
@@ -269,7 +281,5 @@
         Livewire.on('error', data => {
             toastr.error(data[0].message)
         });
-
-
     </script>
 @endpush
