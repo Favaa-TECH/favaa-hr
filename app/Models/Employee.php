@@ -90,6 +90,8 @@ class Employee extends Model
             ->whereDate('end_date', '>=', $date)
             ->exists();
 
+
+
         $status = '';
         if ($isHoliday || $isSpecialHoliday) {
             $status = 'Holiday';

@@ -92,7 +92,7 @@
                                                             style="color: inherit" data-bs-toggle="modal"
                                                             data-bs-target="#deleteModal">
                                                             <i class="fa-solid fa-trash"></i></button>
-                                                        <button wire:click="showFormEditHoliday({{ $holiday->id }})"
+                                                        <button wire:click="showFormEditEmployee({{ $holiday->id }})"
                                                             type="button"
                                                             class="badge badge-sm bg-gradient-success text-white border-0"
                                                             style="color: inherit" data-bs-toggle="modal"

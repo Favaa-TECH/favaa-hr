@@ -65,7 +65,7 @@
         <div class="col-md-6">
             <div class="form-group mb-0">
                 <label for="telephone">Nomor Telepon</label>
-                <input wire:model.blur="phone" type="number"
+                <input wire:model.blur="phone" type="text"
                     class="form-control @error('phone')
             is-invalid
     @enderror" id="telephone"
@@ -150,7 +150,7 @@
         <div class="col-md-6">
             <div class="form-group mb-0">
                 <label for="account_number">Nomor Rekening</label>
-                <input type="number" wire:model.blur="account_number"
+                <input type="text" wire:model.blur="account_number"
                     class="form-control @error('account_number')
             is-invalid
     @enderror"

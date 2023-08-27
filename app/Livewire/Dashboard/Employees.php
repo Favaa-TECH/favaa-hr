@@ -25,9 +25,9 @@ class Employees extends Component
     public $address;
     #[Rule('required|min:5|max:30')]
     public $account_number;
-    #[Rule('required|min:10')]
+    #[Rule('required|min:10|numeric')]
     public $phone;
-    #[Rule('required')]
+    #[Rule('required|numeric')]
     public $position_id;
     #[Rule('required')]
     public $outlet_id;

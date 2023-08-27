@@ -86,7 +86,7 @@
                     <div class="mb-3">
                         <label for="permission_type" class="form-label">Tipe Ijin</label>
                         <select name="permission_type" class="form-select  @error('permission_type') is-invalid @enderror" value="{{ old('permission_type')}}" aria-label="Default select example">
-                            <option disabled selected> <i>--- Pilih Tipe Cuti ---</i></option>
+                            <option disabled selected> <i>--- Pilih Tipe IJin ---</i></option>
                             <option value="Ijin Sakit">Ijin Sakit</option>
                             <option value="Ijin Kecelakaan">Ijin Kecelakaan</option>
                             <option value="Ijin Karena Alasan Penting">Ijin Karena Alasan Penting</option>
