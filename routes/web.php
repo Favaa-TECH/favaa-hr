@@ -22,6 +22,7 @@ use App\Http\Controllers\Attendance\ShiftController;
 use App\Http\Controllers\Employee\EmployeeController;
 use App\Http\Controllers\Attendance\HolidayController;
 use App\Http\Controllers\Attendance\AttendanceController;
+use App\Http\Controllers\Empl\EmplPermissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +91,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/empl-leave', EmplLeaveController::class . '@index')->name('empl-leave.index');
         Route::get('/empl-leave/submit-leave', EmplLeaveController::class . '@submit')->name('empl-leave.submit-leave');
         Route::post('/empl-leave/store', EmplLeaveController::class . '@store')->name('empl-leave.store');
+        Route::get('/empl-permission',EmplPermissionController::class.'@index')->name('empl-permission.index');
+        Route::get('/empl-permission/submit-permission',EmplPermissionController::class.'@submit')->name('empl-permission.submit-permission');
+        Route::post('/empl-permission/store',EmplPermissionController::class.'@store')->name('empl-permission.store');
     });
 
     Route::post('/logout', AuthController::class . '@logout')->name('logout');
