@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Dashboard;
 
+use App\Models\Attendance;
 use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\Employee;
@@ -15,14 +16,18 @@ class Attendances extends Component
     public function render()
     {
         $currentDate = Carbon::now();
-        $currentMonth = $currentDate->year();
-        $currentYear = $currentDate->month();
+        $currentYear = $currentDate->year; // Mengambil tahun
+        $currentMonth = $currentDate->month;
 
-        $employee = Employee::with('attendance')->paginate(10);
+        $employeeAttendance = Employee::with('attendance')->get();
         $attendance = Employee::with('attendance')->whereMonth('created_at', $currentMonth)->whereYear('created_at', $currentYear)->get();
-        // @dd($attendance);
 
-        return view('livewire.dashboard.attendances');
+
+        return view('livewire.dashboard.attendances',[
+            'employeeAttendance' => $employeeAttendance,
+            'attendance' => $attendance,
+
+        ]);
     }
 
     public $lateTolerance;

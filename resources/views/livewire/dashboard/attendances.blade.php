@@ -122,7 +122,7 @@
                         <div class="card-header pb-0 d-flex w-100  justify-content-between mb-3 align-items-center">
                             <div class="title-table">
                                 <h4>Absensi</h4>
-                                <span>Periode Juni 2023</span>
+                                <span>Periode {{ date("F") }} {{ date("Y") }}</span>
                             </div>
                             <div class="mx-4 my-3 d-flex justify-content-start  ">
                                 <h6 class="me-3"> <i class="fa-sharp fa-solid fa-circle-check text-success"></i>
@@ -154,78 +154,54 @@
                                                 Employee Name
                                             </th>
 
-                                            @for ($i = 0; $i < 30; $i++)
+                                            @php
+                                                $currentDate = \Carbon\Carbon::now();
+                                                $currentMonth = $currentDate->year();
+                                                $currentYear = $currentDate->month();
+                                                $daysInMonth = $currentDate->daysInMonth;
+                                            @endphp
+
+                                            @for ($i = 0; $i < $daysInMonth; $i++)
                                                 <th class="bg-white">
                                                     {{ $i + 1 }}
                                                 </th>
                                             @endfor
-
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach ($attendance as $key => $data)
+                                            <tr>
+                                                <td class="p-4">
+                                                    <span class="">{{ $data->name }}</span>
+                                                </td>
+                                                @for ($i = 0; $i < $daysInMonth; $i++)
+                                                    <td class="text-center">
+                                                        @if ($i + 1 == date('d', strtotime($data->attendance[0]->check_out_date)) && $data->attendance[0] != null)
+                                                            @if ($data->attendance[0]->status == 'Present')
+                                                                <i
+                                                                    class="fa-sharp fa-solid fa-circle-check text-success"></i>
+                                                            @elseif($data->attendance[0]->status == 'Absent')
+                                                                <i
+                                                                    class="fa-sharp fa-solid fa-circle-xmark text-danger"></i>
+                                                            @elseif($data->attendance[0]->status == 'Leave')
+                                                                <i
+                                                                    class="fa-sharp fa-solid fa-right-from-bracket text-info"></i>
+                                                            @elseif($data->attendance[0]->status == 'Holiday')
+                                                                <i class="fa-sharp fa-solid fa-house-chimney"></i>
+                                                            @elseif($data->attendance[0]->status == 'Late')
+                                                                <i class="fa-solid fa-clock"
+                                                                    style="color: #FFD015;"></i>
+                                                            @endif
+                                                        @else
+                                                            -
+                                                        @endif
 
 
-                                        <tr>
-                                            <td class="p-4">
-                                                <span class="">Muhammad Ali Faatikh Riziq</span>
-                                            </td>
-                                            @for ($i = 0; $i < 30; $i++)
-                                                <td class="text-center">
-                                                    <i class="fa-sharp fa-solid fa-circle-check text-success"></i>
-                                                </td>
-                                            @endfor
-                                        </tr>
-                                        <tr>
-                                            <td class="p-4">
-                                                <span class="">Muhammad Ali Faatikh Riziq</span>
-                                            </td>
-                                            @for ($i = 0; $i < 30; $i++)
-                                                <td class="text-center">
-                                                    <i class="fa-solid fa-clock" style="color: #FFD015;"></i>
-                                                </td>
-                                            @endfor
-                                        </tr>
-                                        <tr>
-                                            <td class="p-4">
-                                                <span class="">Muhammad Ali Faatikh Riziq</span>
-                                            </td>
-                                            @for ($i = 0; $i < 30; $i++)
-                                                <td class="text-center">
-                                                    <i class="fa-solid fa-circle-xmark text-danger"></i>
-                                                </td>
-                                            @endfor
-                                        </tr>
-                                        <tr>
-                                            <td class="p-4">
-                                                <span class="">Muhammad Ali Faatikh Riziq</span>
-                                            </td>
-                                            @for ($i = 0; $i < 30; $i++)
-                                                <td class="text-center">
-                                                    <i class="fa-solid fa-right-from-bracket text-info"></i>
-                                                </td>
-                                            @endfor
-                                        </tr>
-                                        <tr>
-                                            <td class="p-4">
-                                                <span class="">Muhammad Ali Faatikh Riziq</span>
-                                            </td>
-                                            @for ($i = 0; $i < 30; $i++)
-                                                <td class="text-center">
-                                                    <i class="fa-solid fa-house-chimney"></i>
-                                                </td>
-                                            @endfor
-                                        </tr>
-                                        <tr>
-                                            <td class="p-4">
-                                                <span class="">Muhammad Ali Faatikh Riziq</span>
-                                            </td>
-                                            @for ($i = 0; $i < 30; $i++)
-                                                <td class="text-center font-weight-bold">
-                                                    -
-                                                </td>
-                                            @endfor
-                                        </tr>
-
+                                                        {{-- <i class="fa-sharp fa-solid fa-circle-check text-success"></i> --}}
+                                                    </td>
+                                                @endfor
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -284,7 +260,5 @@
         //         }
         //     });
         // });
-
-
     </script>
 @endpush
