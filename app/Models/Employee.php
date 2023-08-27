@@ -89,7 +89,10 @@ class Employee extends Model
         $isSpecialHoliday = $this->specialHolidays()->whereDate('start_date', '<=', $date)
             ->whereDate('end_date', '>=', $date)
             ->exists();
-
+        $isPermission = $this->permissions()->whereDate('start_date', '<=', $date)
+            ->whereDate('end_date', '>=', $date)
+            ->where('status', 'approved')
+            ->exists();
 
 
         $status = '';
@@ -97,6 +100,8 @@ class Employee extends Model
             $status = 'Holiday';
         } elseif ($isLeave) {
             $status = 'Leave';
+        }elseif ($isPermission) {
+           $status = 'Permission';
         }
         if ($status !== '') {
             $this->attendance()->updateOrCreate([
