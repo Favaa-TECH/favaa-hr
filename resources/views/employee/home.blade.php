@@ -41,6 +41,10 @@
         <button type="button" class="rounded-circle fab bg-gradient-danger border-white border-2"
             style="width: 75px;height: 75px" onclick="alreadyPresent()"><i
                 class="fa-regular fa-fingerprint text-white fa-2x"></i></button>
+    @elseif($passWorkTimeCheck)
+        <button type="button" class="rounded-circle fab bg-gradient-danger border-white border-2"
+            style="width: 75px;height: 75px" onclick="passWorkTime()"><i
+                class="fa-regular fa-fingerprint text-white fa-2x"></i></button>
     @elseif(!$canPresenceCheck)
         <button type="button" class="rounded-circle fab bg-gradient-danger border-white border-2"
             style="width: 75px;height: 75px" onclick="canNotPresent()"><i
@@ -87,7 +91,9 @@
             <div class="col-sm-12 d-flex justify-content-between ">
                 <h6 class="text-primary">
                     @php
-                      echo \Carbon\Carbon::now()->locale('id')->isoFormat('dddd, DD MMMM YYYY');
+                        echo \Carbon\Carbon::now()
+                            ->locale('id')
+                            ->isoFormat('dddd, DD MMMM YYYY');
                     @endphp
                 </h6>
                 <h6 class="text-primary">
@@ -153,7 +159,8 @@
                     <i class="fa-solid fa-power-off text-danger fa-2x mb-1"></i>
                     <span class="font-weight-normal">Cuti</span>
                 </a>
-                <a href="{{ route('empl-permission.index') }}" class="d-flex flex-column justify-content-center align-items-center">
+                <a href="{{ route('empl-permission.index') }}"
+                    class="d-flex flex-column justify-content-center align-items-center">
                     <i class="fa-solid fa-note-sticky text-primary text-warning fa-2x mb-1"></i>
                     <span class="font-weight-normal">Izin</span>
                 </a>
@@ -262,6 +269,15 @@
                         icon: 'error',
                         title: 'Belum masuk jam pulang',
                         text: 'Tunggu saat waktu jam pulang',
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
+                }
+                function passWorkTime() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Jam kerja sudah lewat',
+                        text: 'Anda tidak melakukan absen pada jam kerja',
                         showConfirmButton: false,
                         timer: 1000
                     })

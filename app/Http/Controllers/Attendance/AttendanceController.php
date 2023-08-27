@@ -45,6 +45,8 @@ class AttendanceController extends Controller
         $canCheckIn = $shiftStartTime->copy()->subMinutes(15);
         $canPresenceCheck = $now >= $canCheckIn;
 
+
+
         $canCheckOut = $shiftEndTime->copy();
         $canCheckOutCheck = $now >= $canCheckOut;
         $attendanceHistory = DB::table('attendance')
@@ -55,7 +57,13 @@ class AttendanceController extends Controller
             ->orderBy('check_in_date', 'desc')
             ->get();
 
-        return view('employee.home', compact('shiftEndTime','shiftStartTime','cekAlreadyCheckIn','canCheckOutCheck','canPresenceCheck','cekAlreadyPresent', 'dataCheckInToday', 'dataCheckOutToday', 'userEmployee', 'attendanceHistory', 'dataSchedule'));
+        $passWorkTimeCheck = false;
+
+        if ($cekAlreadyCheckIn <= 0 && $now >= $canCheckOut) {
+            $passWorkTimeCheck = true;
+        }
+
+        return view('employee.home', compact('passWorkTimeCheck', 'shiftEndTime', 'shiftStartTime', 'cekAlreadyCheckIn', 'canCheckOutCheck', 'canPresenceCheck', 'cekAlreadyPresent', 'dataCheckInToday', 'dataCheckOutToday', 'userEmployee', 'attendanceHistory', 'dataSchedule'));
     }
 
     public function presence()
@@ -126,17 +134,17 @@ class AttendanceController extends Controller
 
 
         $lateTolerance = LateTolerance::first();
-        $lateToleranceTime = $lateTolerance->late_tolerance_time *60;
+        $lateToleranceTime = $lateTolerance->late_tolerance_time * 60;
         $clockInTolerance = ClockInTolerance::first();
         $clockInToleranceTime = $clockInTolerance->clock_in_tolerance_time * 60;
 
         $timeDifference = $check_in_time - $shiftStartTime;
 
-        if($timeDifference > $clockInToleranceTime) {
+        if ($timeDifference > $clockInToleranceTime) {
             $presence_status = 'Absent';
-        }else if($timeDifference > $lateToleranceTime) {
+        } else if ($timeDifference > $lateToleranceTime) {
             $presence_status = 'Late';
-        }else {
+        } else {
             $presence_status = 'Present';
         }
 
