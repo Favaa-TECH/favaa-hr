@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Leave;
+use App\Models\Permission;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +22,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        View::composer('components.layouts.partials.sidenav',function($view){
+            $view->with([
+                'leaveCount'=> Leave::all()->where('status','pending')->count(),
+                'permissionCount' => Permission::all()->where('status','pending')->count(),
+            ]);
+        });
     }
 }
