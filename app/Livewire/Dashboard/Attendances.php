@@ -23,7 +23,7 @@ class Attendances extends Component
         $attendance = Employee::with('attendance')->whereMonth('created_at', $currentMonth)->whereYear('created_at', $currentYear)->get();
 
 
-        return view('livewire.dashboard.attendances',[
+        return view('livewire.dashboard.attendances', [
             'employeeAttendance' => $employeeAttendance,
             'attendance' => $attendance,
 
@@ -76,12 +76,47 @@ class Attendances extends Component
         ]);
     }
 
-    public function closeModal(){
+    public function closeModal()
+    {
         $this->dispatch('closeModal');
     }
 
     public function resetForm()
     {
         $this->resetValidation();
+    }
+
+    public $employeeName,
+        $check_in_time,
+        $check_in_date,
+        $check_out_time,
+        $check_out_date,
+        $status,
+        $photo_in,
+        $photo_out,
+        $employee_id,
+        $check_in_latitude,
+        $check_in_longitude,
+        $check_out_latitude,
+        $check_out_longitude;
+
+    public function showModalDataAttendance($id)
+    {
+        $this->employee_id = $id;
+        $attendanceData = Attendance::with('employee')->where('id', $id)->first();
+        $this->employeeName = $attendanceData->employee->name;
+        $this->check_in_time = $attendanceData->check_in_time;
+        $this->check_in_date = $attendanceData->check_in_date;
+        $this->check_out_time = $attendanceData->check_out_time;
+        $this->check_out_date = $attendanceData->check_out_date;
+        $this->status = $attendanceData->status;
+        $this->photo_in = $attendanceData->photo_in;
+        $this->photo_out = $attendanceData->photo_out;
+        $this->check_in_latitude = $attendanceData->check_in_latitude;
+        $this->check_in_longitude = $attendanceData->check_in_longitude;
+        $this->check_out_latitude = $attendanceData->check_out_latitude;
+        $this->check_out_longitude = $attendanceData->check_out_longitude;
+
+
     }
 }

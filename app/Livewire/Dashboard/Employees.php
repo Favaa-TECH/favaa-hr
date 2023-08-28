@@ -195,14 +195,32 @@ class Employees extends Component
     }
 
     public function delete()
-    {
+{
+    try {
         $employee =  Employee::find($this->deleteId);
+
+        if (!$employee) {
+            throw new \Exception("Employee not found");
+        }
+
         if ($employee->photo != 'photos/default-employee-photo.jpeg') {
             Storage::delete('public/' . $employee->photo);
         }
-        $this->dispatch('success',[
+
+        $employee->delete();
+
+        $this->dispatch('success', [
             'message' => 'Data ' . $employee->name . ' berhasil dihapus'
         ]);
-        $employee->delete();
+    } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+        $this->dispatch('error', [
+            'message' =>  $e->getMessage()
+        ]);
+    } catch (\Exception $e) {
+        $this->dispatch('error', [
+            'message' => "Employee tidak bisa di hapus karena ada keterkaitan data lain"
+        ]);
     }
+}
+
 }

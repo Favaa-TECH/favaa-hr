@@ -165,10 +165,10 @@
                     <i class="fa-solid fa-note-sticky text-primary text-warning fa-2x mb-1"></i>
                     <span class="font-weight-normal">Izin</span>
                 </a>
-                <div class="d-flex flex-column justify-content-center align-items-center">
+                <a href="{{ route('empl-history.index') }}" class="d-flex flex-column justify-content-center align-items-center">
                     <i class="fa-solid fa-calendar-week text-info fa-2x mb-1"></i>
                     <span class="font-weight-normal">History</span>
-                </div>
+                </a>
                 <div class="d-flex flex-column justify-content-center align-items-center">
                     <i class="fa-solid fa-credit-card text-warning fa-2x mb-1"></i>
                     <span class="font-weight-normal">Payroll</span>

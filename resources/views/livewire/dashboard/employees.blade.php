@@ -202,6 +202,9 @@
         Livewire.on('success', data => {
             toastr.success(data[0].message)
         });
+        Livewire.on('error', data => {
+            toastr.error(data[0].message)
+        });
 
     </script>
 @endpush

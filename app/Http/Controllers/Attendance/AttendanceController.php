@@ -77,7 +77,7 @@ class AttendanceController extends Controller
         $outlet_long = $dataOutlet->longitude;
         $cek = DB::table('attendance')->where('check_in_date', $date)->where('employee_id', $dataUserEmployeeID)->count();
 
-        return view('employee.presence', compact('cek', 'outlet_lat', 'outlet_long'));
+        return view('employee.presence', compact('dataEmployee','cek', 'outlet_lat', 'outlet_long'));
     }
 
     //Menghitung Jarak Radius

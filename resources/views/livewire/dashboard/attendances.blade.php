@@ -188,18 +188,25 @@
                                                             }
                                                         @endphp
                                                         @if ($attendanceStatus == 'Present')
-                                                            <i
-                                                                class="fa-sharp fa-solid fa-circle-check text-success"></i>
+                                                            <i wire:click="showModalDataAttendance({{ $attendanceData->id }})"
+                                                                class="fa-sharp fa-solid fa-circle-check text-success cursor-pointer" data-bs-toggle="modal"
+                                                                data-bs-target="#showDataAttendanceModal"></i>
                                                         @elseif ($attendanceStatus == 'Absent')
-                                                            <i
-                                                                class="fa-sharp fa-solid fa-circle-xmark text-danger"></i>
+                                                            <i wire:click="showModalDataAttendance({{ $attendanceData->id }})"
+                                                                class="fa-sharp fa-solid fa-circle-xmark text-danger cursor-pointer" data-bs-toggle="modal"
+                                                                data-bs-target="#showDataAttendanceModal"></i>
                                                         @elseif ($attendanceStatus == 'Leave')
-                                                            <i
-                                                                class="fa-sharp fa-solid fa-right-from-bracket text-info"></i>
+                                                            <i wire:click="showModalDataAttendance({{ $attendanceData->id }})"
+                                                                class="fa-sharp fa-solid fa-right-from-bracket text-info cursor-pointer" data-bs-toggle="modal"
+                                                                data-bs-target="#showDataAttendanceModal"></i>
                                                         @elseif ($attendanceStatus == 'Holiday')
-                                                            <i class="fa-sharp fa-solid fa-house-chimney"></i>
+                                                            <i wire:click="showModalDataAttendance({{ $attendanceData->id }})"
+                                                                 class="fa-sharp fa-solid fa-house-chimney cursor-pointer" data-bs-toggle="modal"
+                                                                data-bs-target="#showDataAttendanceModal"></i>
                                                         @elseif ($attendanceStatus == 'Late')
-                                                            <i class="fa-solid fa-clock" style="color: #FFD015;"></i>
+                                                            <i wire:click="showModalDataAttendance({{ $attendanceData->id }})"
+                                                                 class="fa-solid fa-clock cursor-pointer" style="color: #FFD015;" data-bs-toggle="modal"
+                                                                data-bs-target="#showDataAttendanceModal"></i>
                                                         @else
                                                             {{ $attendanceStatus }} {{-- Tampilkan "-" atau status lain jika ada --}}
                                                         @endif
@@ -219,6 +226,7 @@
 
         </div>
     </main>
+    @include('livewire.dashboard.include.show-data-attendance-modal')
 </div>
 @push('additional-js')
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>

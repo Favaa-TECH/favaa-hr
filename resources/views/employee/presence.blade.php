@@ -68,9 +68,9 @@
                 <div class="d-flex flex-column justify-content-center">
 
                     <h6 class="mb-0">
-                        Faatikh Riziq
+                        {{ $dataEmployee->name }}
                     </h6>
-                    <p class="mb-0">faatikhriziq@gmail.com</p>
+                    <p class="mb-0">{{ $dataEmployee->email }}</p>
                 </div>
             </div>
         </div>
