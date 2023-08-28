@@ -122,7 +122,7 @@
                         <div class="card-header pb-0 d-flex w-100  justify-content-between mb-3 align-items-center">
                             <div class="title-table">
                                 <h4>Absensi</h4>
-                                <span>Periode {{ date("F") }} {{ date("Y") }}</span>
+                                <span>Periode {{ date('F') }} {{ date('Y') }}</span>
                             </div>
                             <div class="mx-4 my-3 d-flex justify-content-start  ">
                                 <h6 class="me-3"> <i class="fa-sharp fa-solid fa-circle-check text-success"></i>
@@ -174,6 +174,44 @@
                                                 <td class="p-4">
                                                     <span class="">{{ $data->name }}</span>
                                                 </td>
+                                                @for ($i = 1; $i <= $daysInMonth; $i++)
+                                                    {{-- Mulai dari 1 karena tanggal dimulai dari 1 --}}
+                                                    <td class="text-center">
+                                                        @php
+                                                            $attendanceStatus = 'N/A'; // Default status
+                                                            foreach ($data->attendance as $attendanceData) {
+                                                                $attendanceDate = date('d', strtotime($attendanceData->check_out_date));
+                                                                if ($attendanceDate == $i) {
+                                                                    $attendanceStatus = $attendanceData->status;
+                                                                    break;
+                                                                }
+                                                            }
+                                                        @endphp
+                                                        @if ($attendanceStatus == 'Present')
+                                                            <i
+                                                                class="fa-sharp fa-solid fa-circle-check text-success"></i>
+                                                        @elseif ($attendanceStatus == 'Absent')
+                                                            <i
+                                                                class="fa-sharp fa-solid fa-circle-xmark text-danger"></i>
+                                                        @elseif ($attendanceStatus == 'Leave')
+                                                            <i
+                                                                class="fa-sharp fa-solid fa-right-from-bracket text-info"></i>
+                                                        @elseif ($attendanceStatus == 'Holiday')
+                                                            <i class="fa-sharp fa-solid fa-house-chimney"></i>
+                                                        @elseif ($attendanceStatus == 'Late')
+                                                            <i class="fa-solid fa-clock" style="color: #FFD015;"></i>
+                                                        @else
+                                                            -
+                                                        @endif
+                                                    </td>
+                                                @endfor
+                                            </tr>
+                                        @endforeach
+                                        {{-- @foreach ($attendance as $key => $data)
+                                            <tr>
+                                                <td class="p-4">
+                                                    <span class="">{{ $data->name }}</span>
+                                                </td>
                                                 @for ($i = 0; $i < $daysInMonth; $i++)
                                                     <td class="text-center">
                                                         @if ($i + 1 == date('d', strtotime($data->attendance[0]->check_out_date)) && $data->attendance[0] != null)
@@ -197,11 +235,11 @@
                                                         @endif
 
 
-                                                        {{-- <i class="fa-sharp fa-solid fa-circle-check text-success"></i> --}}
+
                                                     </td>
                                                 @endfor
                                             </tr>
-                                        @endforeach
+                                        @endforeach --}}
                                     </tbody>
                                 </table>
                             </div>
