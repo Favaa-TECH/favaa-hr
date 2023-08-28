@@ -196,12 +196,20 @@
                         <div class="card-body p-3">
                             <div class="row">
                                 <div class="col-sm-12 d-flex justify-content-between">
+                                    @if($history->status == 'Holiday' || $history->status == 'Permission' || $history->status = 'Leave')
+                                    <h4 class="mb-0 text-white text-center">
+                                        {{ $history->check_in_date }}</h4>
+                                    <h1 class="text-white">|</h1>
+                                    <h4 class="mb-0 text-white text-center">
+                                        {{ $history->check_out_date }}</h4>
+                                    @else
 
                                     <h4 class="mb-0 text-white text-center">Check In <br>
                                         {{ $history->check_in_time }}</h4>
                                     <h1 class="text-white">|</h1>
                                     <h4 class="mb-0 text-white text-center">Check Out <br>
                                         {{ $history->check_out_time }}</h4>
+                                    @endif
                                 </div>
                             </div>
                         </div>

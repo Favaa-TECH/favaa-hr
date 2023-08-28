@@ -105,7 +105,8 @@ class Employee extends Model
         }
         if ($status !== '') {
             $this->attendance()->updateOrCreate([
-                'check_out_date' => $date
+                'check_in_date' => $date,
+                'check_out_date' => $date,
             ], [
                 'status' => $status
             ]);

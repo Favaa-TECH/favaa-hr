@@ -178,9 +178,9 @@
                                                     {{-- Mulai dari 1 karena tanggal dimulai dari 1 --}}
                                                     <td class="text-center">
                                                         @php
-                                                            $attendanceStatus = 'N/A'; // Default status
+                                                            $attendanceStatus = '-'; // Default status
                                                             foreach ($data->attendance as $attendanceData) {
-                                                                $attendanceDate = date('d', strtotime($attendanceData->check_out_date));
+                                                                $attendanceDate = date('d', strtotime($attendanceData->check_in_date));
                                                                 if ($attendanceDate == $i) {
                                                                     $attendanceStatus = $attendanceData->status;
                                                                     break;
@@ -201,45 +201,12 @@
                                                         @elseif ($attendanceStatus == 'Late')
                                                             <i class="fa-solid fa-clock" style="color: #FFD015;"></i>
                                                         @else
-                                                            -
+                                                            {{ $attendanceStatus }} {{-- Tampilkan "-" atau status lain jika ada --}}
                                                         @endif
                                                     </td>
                                                 @endfor
                                             </tr>
                                         @endforeach
-                                        {{-- @foreach ($attendance as $key => $data)
-                                            <tr>
-                                                <td class="p-4">
-                                                    <span class="">{{ $data->name }}</span>
-                                                </td>
-                                                @for ($i = 0; $i < $daysInMonth; $i++)
-                                                    <td class="text-center">
-                                                        @if ($i + 1 == date('d', strtotime($data->attendance[0]->check_out_date)) && $data->attendance[0] != null)
-                                                            @if ($data->attendance[0]->status == 'Present')
-                                                                <i
-                                                                    class="fa-sharp fa-solid fa-circle-check text-success"></i>
-                                                            @elseif($data->attendance[0]->status == 'Absent')
-                                                                <i
-                                                                    class="fa-sharp fa-solid fa-circle-xmark text-danger"></i>
-                                                            @elseif($data->attendance[0]->status == 'Leave')
-                                                                <i
-                                                                    class="fa-sharp fa-solid fa-right-from-bracket text-info"></i>
-                                                            @elseif($data->attendance[0]->status == 'Holiday')
-                                                                <i class="fa-sharp fa-solid fa-house-chimney"></i>
-                                                            @elseif($data->attendance[0]->status == 'Late')
-                                                                <i class="fa-solid fa-clock"
-                                                                    style="color: #FFD015;"></i>
-                                                            @endif
-                                                        @else
-                                                            -
-                                                        @endif
-
-
-
-                                                    </td>
-                                                @endfor
-                                            </tr>
-                                        @endforeach --}}
                                     </tbody>
                                 </table>
                             </div>
