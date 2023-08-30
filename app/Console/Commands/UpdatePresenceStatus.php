@@ -57,6 +57,15 @@ class UpdatePresenceStatus extends Command
                         'status' => 'Absent',
                     ]);
                 }
+            } else {
+                // Periksa apakah sudah melewati jam 00:00 dan belum ada checkout
+                $midnight = Carbon::parse($today)->addDay(); // Tambah 1 hari untuk jam 00:00
+                if ($attendance->check_out_time === null && Carbon::now() >= $midnight) {
+                    $attendance->update([
+                        'check_out_time' => $midnight,
+                        'status' => 'Absent',
+                    ]);
+                }
             }
         }
 
