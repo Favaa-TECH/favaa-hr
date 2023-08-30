@@ -96,7 +96,7 @@
                                                     </td>
                                                     <td class="p-1 align-middle">
                                                         <h6
-                                                            class="badge badge-sm  bg-gradient-warning   p-2 text-uppercase">
+                                                            class="badge badge-sm  @if($schedule->shift->shift_type == 'Normal Shift') bg-gradient-primary @elseif ($schedule->shift->shift_type == 'Night Shift') bg-gradient-secondary @elseif ($schedule->shift->shift_type == 'Morning Shift') bg-gradient-warning @endif   p-2 text-uppercase">
                                                             {{ $schedule->shift->shift_type }}</h6>
                                                     </td>
                                                     <td class="p-1">
