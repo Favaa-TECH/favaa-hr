@@ -54,6 +54,7 @@ class UpdatePresenceStatus extends Command
                         'employee_id' => $schedule->employee_id,
                         'check_out_time' => $shiftEndTime,
                         'check_out_date' => $today,
+                        'check_in_date' => $today,
                         'status' => 'Absent',
                     ]);
                 }
