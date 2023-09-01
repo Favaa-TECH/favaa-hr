@@ -161,9 +161,11 @@
                                                 $daysInMonth = $currentDate->daysInMonth;
                                             @endphp
 
-                                            @for ($i = 0; $i < $daysInMonth; $i++)
+
+
+                                            @for ($i = 1; $i < $daysInMonth; $i++)
                                                 <th class="bg-white">
-                                                    {{ $i + 1 }}
+                                                    {{ $i }}
                                                 </th>
                                             @endfor
                                         </tr>
@@ -174,7 +176,7 @@
                                                 <td class="p-4">
                                                     <span class="">{{ $data->name }}</span>
                                                 </td>
-                                                @for ($i = 1; $i <= $daysInMonth; $i++)
+                                                @for ($i = 1; $i < $daysInMonth; $i++)
                                                     {{-- Mulai dari 1 karena tanggal dimulai dari 1 --}}
                                                     <td class="text-center">
                                                         @php
