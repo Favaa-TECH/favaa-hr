@@ -20,7 +20,9 @@ class Attendances extends Component
         $currentMonth = $currentDate->month;
 
         $employeeAttendance = Employee::with('attendance')->get();
-        $attendance = Employee::with('attendance')->whereMonth('created_at', $currentMonth)->whereYear('created_at', $currentYear)->get();
+        $attendance = Employee::with(['attendance' => function ($query) use ($currentMonth, $currentYear) {
+            $query->whereMonth('check_in_date', $currentMonth)->whereYear('check_in_date', $currentYear);
+        }])->get();
 
 
         return view('livewire.dashboard.attendances', [
