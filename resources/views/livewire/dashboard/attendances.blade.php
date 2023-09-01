@@ -133,7 +133,7 @@
                                 <h6 class="me-3"> <i class="fa-solid fa-house-chimney"></i> Holiday</h6>
                             </div>
                             <div class="input-date-search d-flex justify-content-center align-items-center ">
-                                <input type="text" class="form-control me-2" placeholder="Cari karyawan"
+                                <input wire:model.live.debounce.500ms='search' type="text" class="form-control me-2" placeholder="Cari karyawan"
                                     name="search-employee" id="search-employee" style="height: 40px">
                                 <input type="month" class="form-control me-2" name="month" id="month"
                                     style="height: 40px">

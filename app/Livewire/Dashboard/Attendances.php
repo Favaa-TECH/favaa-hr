@@ -13,6 +13,7 @@ use App\Models\ClockInTolerance;
 class Attendances extends Component
 {
     use WithPagination;
+    public $search = '';
     public function render()
     {
         $currentDate = Carbon::now();
@@ -22,7 +23,7 @@ class Attendances extends Component
         $employeeAttendance = Employee::with('attendance')->get();
         $attendance = Employee::with(['attendance' => function ($query) use ($currentMonth, $currentYear) {
             $query->whereMonth('check_in_date', $currentMonth)->whereYear('check_in_date', $currentYear);
-        }])->get();
+        }])->where('name', 'like', '%' . $this->search . '%')->get();
 
 
         return view('livewire.dashboard.attendances', [
@@ -118,7 +119,5 @@ class Attendances extends Component
         $this->check_in_longitude = $attendanceData->check_in_longitude;
         $this->check_out_latitude = $attendanceData->check_out_latitude;
         $this->check_out_longitude = $attendanceData->check_out_longitude;
-
-
     }
 }
