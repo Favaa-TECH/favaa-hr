@@ -9,6 +9,7 @@ use App\Models\SpecialHoliday;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Log;
 
 class Employee extends Model
 {
@@ -128,24 +129,27 @@ class Employee extends Model
         $isCheckIn = $this->attendance()->where('check_in_date', $date)->exists();
         $isCheckOut = $this->attendance()->where('check_out_date', $date)->exists();
 
-        if (!$isCheckIn){
-            if ($timeNow > $shiftEndTime){
-                $this->attendance()->updateOrCreate([
+
+        if (!$isCheckIn) {
+            if ($timeNow > $shiftEndTime) {
+                $this->attendance()->updateOrCreate(
+                    [
                     'check_in_date' => $date,
+                    'check_out_date' => $date,
+                    ],
+                    [
+                        'status' => 'Absent'
+                    ]
+                );
+
+            }
+        } elseif (!$isCheckOut && $timeNow >= "23:57:00") {
+            $this->attendance()
+                ->where('check_in_date', $date)
+                ->update([
                     'check_out_date' => $date,
                     'status' => 'Absent'
                 ]);
-                return;
-            }
-        }elseif (!$isCheckOut){
-            if($timeNow >= "23:58:00"){
-                $this->attendance()->updateOrCreate([
-                    'check_in_date' => $date,
-                    'check_out_date' => $date,
-                    'status' => 'Absent'
-                ]);
-                return;
-            }
         }
 
     }

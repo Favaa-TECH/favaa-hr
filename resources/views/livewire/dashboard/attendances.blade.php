@@ -163,7 +163,6 @@
                                             $daysInMonth = $currentDate->daysInMonth;
 
 
-
                                         @endphp
 
 
