@@ -15,7 +15,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
         $schedule->command('app:update-attendance-status')->everyMinute();
         $schedule->command('app:update-presence-status')->everyMinute();
         $schedule->command('app:delete-attendance-photos')->monthly();

@@ -15,6 +15,7 @@ class Employee extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
     /**
      * Get the outlet that owns the Employee
      *
@@ -24,10 +25,12 @@ class Employee extends Model
     {
         return $this->belongsTo(Outlet::class);
     }
+
     public function position()
     {
         return $this->belongsTo(Position::class);
     }
+
     public function holiday()
     {
         return $this->hasMany(Holiday::class);
@@ -53,10 +56,10 @@ class Employee extends Model
         return $this->hasMany(Attendance::class);
     }
 
-    public function permissions(){
+    public function permissions()
+    {
         return $this->hasMany(Permission::class);
     }
-
 
 
     public static function boot(): void
@@ -75,6 +78,7 @@ class Employee extends Model
             $user->save();
         });
     }
+
     public function updateAttendanceStatus($date)
     {
 
@@ -96,12 +100,13 @@ class Employee extends Model
 
 
         $status = '';
+        $attendance = $this->attendance()->where('check_in_date', $date)->exists();
         if ($isHoliday || $isSpecialHoliday) {
             $status = 'Holiday';
         } elseif ($isLeave) {
             $status = 'Leave';
-        }elseif ($isPermission) {
-           $status = 'Permission';
+        } elseif ($isPermission) {
+            $status = 'Permission';
         }
         if ($status !== '') {
             $this->attendance()->updateOrCreate([
@@ -111,6 +116,36 @@ class Employee extends Model
                 'status' => $status
             ]);
             return;
+        }
+
+    }
+
+    public function updatePresenceStatus($date)
+    {
+        $timeNow = Carbon::now()->toTimeString();
+        $schedule = $this->schedule;
+        $shiftEndTime = $schedule->shift->end_time;
+        $isCheckIn = $this->attendance()->where('check_in_date', $date)->exists();
+        $isCheckOut = $this->attendance()->where('check_out_date', $date)->exists();
+
+        if (!$isCheckIn){
+            if ($timeNow > $shiftEndTime){
+                $this->attendance()->updateOrCreate([
+                    'check_in_date' => $date,
+                    'check_out_date' => $date,
+                    'status' => 'Absent'
+                ]);
+                return;
+            }
+        }elseif (!$isCheckOut){
+            if($timeNow >= "23:58:00"){
+                $this->attendance()->updateOrCreate([
+                    'check_in_date' => $date,
+                    'check_out_date' => $date,
+                    'status' => 'Absent'
+                ]);
+                return;
+            }
         }
 
     }

@@ -27,7 +27,7 @@ class DeleteAttendancePhotos extends Command
     {
         $this->info('Deleting attendance photos...');
 
-        $attendancePhotos = glob(storage_path('app/public/attendace/photos/*'));
+        $attendancePhotos = glob(storage_path('app/public/attendance/photos/*'));
 
         foreach ($attendancePhotos as $attendancePhoto) {
             if (is_file($attendancePhoto)) {
