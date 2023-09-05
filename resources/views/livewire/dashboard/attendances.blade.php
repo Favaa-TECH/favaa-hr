@@ -1,6 +1,6 @@
 @push('additional-css')
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
-          xmlns:wire="http://www.w3.org/1999/xhtml">
+        xmlns:wire="http://www.w3.org/1999/xhtml">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <style>
         .table-responsive {
@@ -135,95 +135,95 @@
                             </div>
                             <div class="input-date-search d-flex justify-content-center align-items-center ">
                                 <input wire:model.live.debounce.500ms='search' type="text" class="form-control me-2"
-                                       placeholder="Cari karyawan"
-                                       name="search-employee" id="search-employee" style="height: 40px">
+                                    placeholder="Cari karyawan" name="search-employee" id="search-employee"
+                                    style="height: 40px">
                                 <input type="month" class="form-control me-2" name="month" id="month"
-                                       style="height: 40px">
+                                    style="height: 40px">
                             </div>
 
                         </div>
 
                         <div class="card-body px-0 pt-0 pb-2">
                             <button class=" btn btn-sm  bg-primary ms-4" data-bs-toggle="modal"
-                                    data-bs-target="#settingAttendance"><i class="fa-solid fa-gear text-white"></i>
+                                data-bs-target="#settingAttendance"><i class="fa-solid fa-gear text-white"></i>
                             </button>
                             @include('livewire.dashboard.include.setting-attendance-rules')
 
                             <div class="table-responsive p-0">
                                 <table class="table align-items-center mb-0 table-sticky" id="attendance-table">
                                     <thead>
-                                    <tr class="sticky-top">
-                                        <th>
-                                            Employee Name
-                                        </th>
-
-                                        @php
-                                            $currentDate = \Carbon\Carbon::now();
-                                            $currentMonth = $currentDate->year();
-                                            $currentYear = $currentDate->month();
-                                            $daysInMonth = $currentDate->daysInMonth;
-                                        @endphp
-
-
-
-                                        @for ($i = 1; $i < $daysInMonth; $i++)
-                                            <th class="bg-white">
-                                                {{ $i }}
+                                        <tr class="sticky-top">
+                                            <th>
+                                                Employee Name
                                             </th>
-                                        @endfor
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach ($attendance as $key => $data)
-                                        <tr>
-                                            <td class="p-4">
-                                                <span class="">{{ $data->name }}</span>
-                                            </td>
+
+                                            @php
+                                                $currentDate = \Carbon\Carbon::now();
+                                                $currentMonth = $currentDate->year();
+                                                $currentYear = $currentDate->month();
+                                                $daysInMonth = $currentDate->daysInMonth;
+                                            @endphp
+
+
+
                                             @for ($i = 1; $i < $daysInMonth; $i++)
-                                                {{-- Mulai dari 1 karena tanggal dimulai dari 1 --}}
-                                                <td class="text-center">
-                                                    @php
-                                                        $attendanceStatus = '-'; // Default status
-                                                        foreach ($data->attendance as $attendanceData) {
-                                                            $attendanceDate = date('d', strtotime($attendanceData->check_in_date));
-                                                            if ($attendanceDate == $i) {
-                                                                $attendanceStatus = $attendanceData->status;
-                                                                break;
-                                                            }
-                                                        }
-                                                    @endphp
-                                                    @if ($attendanceStatus == 'Present')
-                                                        <i wire:click="showModalDataAttendance({{ $attendanceData->id }})"
-                                                           class="fa-sharp fa-solid fa-circle-check text-success cursor-pointer"
-                                                           data-bs-toggle="modal"
-                                                           data-bs-target="#showDataAttendanceModal"></i>
-                                                    @elseif ($attendanceStatus == 'Absent')
-                                                        <i wire:click="showModalDataAttendance({{ $attendanceData->id }})"
-                                                           class="fa-sharp fa-solid fa-circle-xmark text-danger cursor-pointer"
-                                                           data-bs-toggle="modal"
-                                                           data-bs-target="#showDataAttendanceModal"></i>
-                                                    @elseif ($attendanceStatus == 'Leave')
-                                                        <i wire:click="showModalDataAttendance({{ $attendanceData->id }})"
-                                                           class="fa-sharp fa-solid fa-right-from-bracket text-info cursor-pointer"
-                                                           data-bs-toggle="modal"
-                                                           data-bs-target="#showDataAttendanceModal"></i>
-                                                    @elseif ($attendanceStatus == 'Holiday')
-                                                        <i wire:click="showModalDataAttendance({{ $attendanceData->id }})"
-                                                           class="fa-sharp fa-solid fa-house-chimney cursor-pointer"
-                                                           data-bs-toggle="modal"
-                                                           data-bs-target="#showDataAttendanceModal"></i>
-                                                    @elseif ($attendanceStatus == 'Late')
-                                                        <i wire:click="showModalDataAttendance({{ $attendanceData->id }})"
-                                                           class="fa-solid fa-clock cursor-pointer"
-                                                           style="color: #FFD015;" data-bs-toggle="modal"
-                                                           data-bs-target="#showDataAttendanceModal"></i>
-                                                    @else
-                                                        {{ $attendanceStatus }} {{-- Tampilkan "-" atau status lain jika ada --}}
-                                                    @endif
-                                                </td>
+                                                <th class="bg-white">
+                                                    {{ $i }}
+                                                </th>
                                             @endfor
                                         </tr>
-                                    @endforeach
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($attendance as $key => $data)
+                                            <tr>
+                                                <td class="p-4">
+                                                    <span class="">{{ $data->name }}</span>
+                                                </td>
+                                                @for ($i = 1; $i < $daysInMonth; $i++)
+                                                    {{-- Mulai dari 1 karena tanggal dimulai dari 1 --}}
+                                                    <td class="text-center">
+                                                        @php
+                                                            $attendanceStatus = '-'; // Default status
+                                                            foreach ($data->attendance as $attendanceData) {
+                                                                $attendanceDate = date('d', strtotime($attendanceData->check_in_date));
+                                                                if ($attendanceDate == $i) {
+                                                                    $attendanceStatus = $attendanceData->status;
+                                                                    break;
+                                                                }
+                                                            }
+                                                        @endphp
+                                                        @if ($attendanceStatus == 'Present')
+                                                            <i wire:click="showModalDataAttendance({{ $attendanceData->id }})"
+                                                                class="fa-sharp fa-solid fa-circle-check text-success cursor-pointer"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#showDataAttendanceModal"></i>
+                                                        @elseif ($attendanceStatus == 'Absent')
+                                                            <i wire:click="showModalDataAttendance({{ $attendanceData->id }})"
+                                                                class="fa-sharp fa-solid fa-circle-xmark text-danger cursor-pointer"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#showDataAttendanceModal"></i>
+                                                        @elseif ($attendanceStatus == 'Leave')
+                                                            <i wire:click="showModalDataAttendance({{ $attendanceData->id }})"
+                                                                class="fa-sharp fa-solid fa-right-from-bracket text-info cursor-pointer"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#showDataAttendanceModal"></i>
+                                                        @elseif ($attendanceStatus == 'Holiday')
+                                                            <i wire:click="showModalDataAttendance({{ $attendanceData->id }})"
+                                                                class="fa-sharp fa-solid fa-house-chimney cursor-pointer"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#showDataAttendanceModal"></i>
+                                                        @elseif ($attendanceStatus == 'Late')
+                                                            <i wire:click="showModalDataAttendance({{ $attendanceData->id }})"
+                                                                class="fa-solid fa-clock cursor-pointer"
+                                                                style="color: #FFD015;" data-bs-toggle="modal"
+                                                                data-bs-target="#showDataAttendanceModal"></i>
+                                                        @else
+                                                            {{ $attendanceStatus }} {{-- Tampilkan "-" atau status lain jika ada --}}
+                                                        @endif
+                                                    </td>
+                                                @endfor
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
