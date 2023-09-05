@@ -1,5 +1,6 @@
 @push('additional-css')
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+          xmlns:wire="http://www.w3.org/1999/xhtml">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <style>
         .table-responsive {
@@ -161,8 +162,6 @@
                                             $currentMonth = $currentDate->year();
                                             $currentYear = $currentDate->month();
                                             $daysInMonth = $currentDate->daysInMonth;
-
-
                                         @endphp
 
 
