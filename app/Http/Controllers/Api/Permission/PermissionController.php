@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Permission;
+namespace App\Http\Controllers\Api\Permission;
 
 use Carbon\Carbon;
 use App\Models\Employee;
@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 
 class PermissionController extends Controller
 {
-    public function submitPermission(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'employee_id' => 'required|exists:employees,id',

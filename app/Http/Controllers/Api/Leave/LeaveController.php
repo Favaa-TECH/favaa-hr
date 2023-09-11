@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Leave;
+namespace App\Http\Controllers\Api\Leave;
 
 use Carbon\Carbon;
 use App\Models\Employee;
@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 
 class LeaveController extends Controller
 {
-    public function submitLeave(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'employee_id' => 'required|exists:employees,id',

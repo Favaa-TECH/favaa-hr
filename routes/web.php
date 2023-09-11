@@ -16,7 +16,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Employee\UserController;
 use App\Http\Controllers\Master\OutletController;
 use App\Http\Controllers\Empl\EmplLeaveController;
-use App\Http\Controllers\API\Leave\LeaveController;
+use App\Http\Controllers\Api\Leave\LeaveController;
 use App\Http\Controllers\Master\PositionController;
 use App\Http\Controllers\Attendance\ShiftController;
 use App\Http\Controllers\Empl\EmplHistoryController;
@@ -80,6 +80,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/leave',Leaves::class)->name('leave.index');
         Route::get('/permission',Permissions::class)->name('permission.index');
+
+        Route::get('/generate-api-key',[\App\Http\Controllers\GenerateApiKey::class,'generateApiKey'])->name('generate-api-key');
 
 
 

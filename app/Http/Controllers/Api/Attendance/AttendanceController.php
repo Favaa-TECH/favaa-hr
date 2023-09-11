@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\Attendance;
+namespace App\Http\Controllers\Api\Attendance;
 
 use Carbon\Carbon;
 use App\Models\User;
@@ -14,7 +14,6 @@ use App\Models\Schedule;
 use App\Models\Shift;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-
 
 
 class AttendanceController extends Controller
@@ -80,17 +79,17 @@ class AttendanceController extends Controller
 
 
         $lateTolerance = LateTolerance::first();
-        $lateToleranceTime = $lateTolerance->late_tolerance_time *60;
+        $lateToleranceTime = $lateTolerance->late_tolerance_time * 60;
         $clockInTolerance = ClockInTolerance::first();
         $clockInToleranceTime = $clockInTolerance->clock_in_tolerance_time * 60;
 
         $timeDifference = $check_in_time - $shiftStartTime;
 
-        if($timeDifference > $clockInToleranceTime) {
+        if ($timeDifference > $clockInToleranceTime) {
             $presence_status = 'Absent';
-        }else if($timeDifference > $lateToleranceTime) {
+        } else if ($timeDifference > $lateToleranceTime) {
             $presence_status = 'Late';
-        }else {
+        } else {
             $presence_status = 'Present';
         }
 
@@ -147,6 +146,27 @@ class AttendanceController extends Controller
         }
     }
 
+
+    public function getHistory($id)
+    {
+        try {
+            $attendance = Attendance::where('employee_id', $id)->get();
+            if($attendance->count() > 0){
+                return response()->json([
+                    'status' => 'success',
+                    'data' => $attendance
+                ], 200);
+            }else if($attendance->count() == 0){
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'data history tidak ditemukan'
+                ], 404);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'An error occurred'], 500);
+        }
+    }
+
     public function getAttendanceHistory(Request $request)
     {
         try {
@@ -164,7 +184,7 @@ class AttendanceController extends Controller
 
             if ($attendanceHistory->count() > 0) {
                 return response()->json(['status' => 'success', 'data' => $attendanceHistory], 200);
-            } else if($attendanceHistory->count() == 0) {
+            } else if ($attendanceHistory->count() == 0) {
                 return response()->json(['status' => 'error', 'data' => null], 404);
             }
         } catch (\Exception $e) {
@@ -185,7 +205,7 @@ class AttendanceController extends Controller
 
             if ($dataCheckInToday->count() > 0) {
                 return response()->json(['status' => 'success', 'data' => $dataCheckInToday], 200);
-            } else if($dataCheckInToday->count() == 0) {
+            } else if ($dataCheckInToday->count() == 0) {
                 return response()->json(['status' => 'error', 'data' => null], 404);
             }
         } catch (\Exception $e) {
@@ -206,7 +226,7 @@ class AttendanceController extends Controller
 
             if ($dataCheckOutToday->count() > 0) {
                 return response()->json(['status' => 'success', 'data' => $dataCheckOutToday], 200);
-            } else if($dataCheckOutToday->count() == 0) {
+            } else if ($dataCheckOutToday->count() == 0) {
                 return response()->json(['status' => 'error', 'data' => null], 404);
             }
         } catch (\Exception $e) {

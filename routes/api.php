@@ -4,9 +4,9 @@ use App\Models\Permission;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthAPI\AuthController;
-use App\Http\Controllers\API\Leave\LeaveController;
-use App\Http\Controllers\API\Attendance\AttendanceController;
-use App\Http\Controllers\API\Permission\PermissionController;
+use App\Http\Controllers\Api\Leave\LeaveController;
+use App\Http\Controllers\Api\Attendance\AttendanceController;
+use App\Http\Controllers\Api\Permission\PermissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +20,7 @@ use App\Http\Controllers\API\Permission\PermissionController;
 */
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/employee', [\App\Http\Controllers\Api\Employee\EmployeeController::class, 'getEmployee']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::get('/user', function(){
@@ -27,13 +28,13 @@ Route::middleware('auth:sanctum')->group(function(){
     });
     Route::get('/logout',[AuthController::class, 'logout']);
     Route::post('/attendance',[AttendanceController::class, 'store']);
+    Route::get('/attendance/{id}',[AttendanceController::class, 'getHistory']);
     Route::get('/attendance/history',[AttendanceController::class, 'getAttendanceHistory']);
     Route::get('/attendance/check-out-today',[AttendanceController::class, 'getCheckOutToday']);
     Route::get('/attendance/check-in-today',[AttendanceController::class, 'getCheckInToday']);
 
-    Route::post('/leave',[LeaveController::class, 'submitLeave']);
-    Route::post('/permission',[PermissionController::class, 'submitPermission']);
-
+    Route::post('/leave',[LeaveController::class, 'store']);
+    Route::post('/permission',[PermissionController::class, 'store']);
 });
 
 
