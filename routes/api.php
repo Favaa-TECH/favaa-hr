@@ -21,6 +21,7 @@ use App\Http\Controllers\Api\Permission\PermissionController;
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/employee', [\App\Http\Controllers\Api\Employee\EmployeeController::class, 'getEmployee']);
+Route::get('/position', [\App\Http\Controllers\Api\Position\PositionController::class, 'getPosition']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::get('/user', function(){
