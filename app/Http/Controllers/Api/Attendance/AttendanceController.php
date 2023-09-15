@@ -4,14 +4,15 @@ namespace App\Http\Controllers\Api\Attendance;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Shift;
+use App\Models\ApiKey;
+use App\Models\Schedule;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
+use App\Models\LateTolerance;
+use App\Models\ClockInTolerance;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\ClockInTolerance;
-use App\Models\LateTolerance;
-use App\Models\Schedule;
-use App\Models\Shift;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -231,6 +232,34 @@ class AttendanceController extends Controller
             }
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e], 500);
+        }
+    }
+
+
+    public function getHistoryPA(Request $request){
+        try {
+            $apiInput = $request->input('api_key');
+            $validApiKey = ApiKey::where('key', $apiInput)->first();
+            if ($validApiKey){
+                $attendance = DB::table('attendance')->get();
+                return response()->json([
+                    'code' => '200',
+                    'status' => 'OK',
+                    'data' => $attendance
+                ], 200);
+            }else{
+                return response()->json([
+                    'code' => '401',
+                    'status' => 'UNAUTHORIZED',
+                    'data' => 'Unauthorized'
+                ], 401);
+            }
+        }catch (\Exception $e){
+            return response()->json([
+                'code' => '500',
+                'status' => 'INTERNAL_SERVER_ERROR',
+                'data' => $e->getMessage()
+            ], 500);
         }
     }
 }
