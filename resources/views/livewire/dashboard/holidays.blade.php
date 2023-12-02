@@ -27,7 +27,7 @@
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
-                                <div class="container">
+                                <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -195,7 +195,7 @@
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
 
-                                <div class="container">
+                                <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -404,7 +404,7 @@
                         <div class="card-body px-0 pt-0 pb-2">
                             <div class="table-responsive p-0">
 
-                                <div class="container">
+                                <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
