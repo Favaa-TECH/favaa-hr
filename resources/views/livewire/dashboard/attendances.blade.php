@@ -125,7 +125,7 @@
                                 <h4>Absensi</h4>
                                 <span>Periode {{ date('F') }} {{ date('Y') }}</span>
                             </div>
-                            <div class="mx-4 my-3 d-flex justify-content-start  ">
+                            <div class="mx-4 my-3 d-flex justify-content-start">
                                 <h6 class="me-3"><i class="fa-sharp fa-solid fa-circle-check text-success"></i>
                                     Present</h6>
                                 <h6 class="me-3"><i class="fa-solid fa-clock" style="color: #FFD015;"></i> Late </h6>

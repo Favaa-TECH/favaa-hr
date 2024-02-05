@@ -37,6 +37,13 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::post('/leave',[LeaveController::class, 'store']);
     Route::post('/permission',[PermissionController::class, 'store']);
+
+
+    require __DIR__.'/v2/attendance.php';
+    require __DIR__.'/v2/employee.php';
 });
+
+
+
 
 

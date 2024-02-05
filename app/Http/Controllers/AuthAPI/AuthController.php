@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\AuthAPI;
 
 use App\Models\User;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -20,26 +21,36 @@ class AuthController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'error' => true,
+                'status' => 'BAD_REQUEST',
+                'code' => 400,
                 'message' => $validator->errors()->first()
-            ], 401);
+            ], 400);
         }
         $user = User::where('email', $request->email)->first();
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response([
-                'error' => true,
+                'status' => 'UNAUTHORIZED',
+                'code' => 401,
                 'message' => 'Email atau Password salah!'
             ], 401);
         }
 
         $token = $user->createToken('token-name')->plainTextToken;
+        $employee = Employee::where('id', $user->employee_id)->first();
         return response()->json([
-            'message' => 'Login Berhasil',
+            'status' => 'OK',
+            'code' => 200,
+            'message' => 'Login Success!',
             'token' => $token,
-            'user' => $user->name,
-            'role' => $user->role,
-            'employee_id' => $user->employee_id,
-            'photo' => $user->photo,
+            'data' => [
+                'id' => $user->id,
+                'employee_id' => $user->employee_id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'role' => $user->role,
+                'position' => $employee->position->name,
+                'photo' => $employee->photo,
+            ]
         ],200);
     }
 
@@ -47,7 +58,9 @@ class AuthController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
         return response()->json([
-            'message' => 'success'
-        ]);
+            'status' => 'OK',
+            'code' => 200,
+            'message' => 'Logout Success!',
+        ],200);
     }
 }

@@ -138,6 +138,8 @@ class Employee extends Model
                     'check_out_date' => $date,
                     ],
                     [
+                        'check_in_time' => $timeNow,
+                        'check_out_time' => $timeNow,
                         'status' => 'Absent'
                     ]
                 );
@@ -148,6 +150,8 @@ class Employee extends Model
                 ->where('check_in_date', $date)
                 ->update([
                     'check_out_date' => $date,
+                    'check_out_time' => $timeNow,
+                    'check_in_time' => $timeNow,
                     'status' => 'Absent'
                 ]);
         }
