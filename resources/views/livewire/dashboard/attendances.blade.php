@@ -158,10 +158,8 @@
                                             </th>
 
                                             @php
-                                                $currentDate = \Carbon\Carbon::now();
-                                                $currentMonth = $currentDate->year();
-                                                $currentYear = $currentDate->month();
-                                                $daysInMonth = $currentDate->daysInMonth;
+                                                $dt = \Carbon\Carbon::now();
+                                                $daysInMonth = \Carbon\Carbon::parse($dt->format('Y-m-d'))->daysInMonth;
                                             @endphp
 
 
