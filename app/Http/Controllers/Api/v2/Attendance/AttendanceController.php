@@ -34,18 +34,18 @@ class AttendanceController extends Controller
 
             if ($attendanceHistory->count() > 0) {
                 return response()->json([
-                'code' => '200',
-                'status' => 'OK',
-                'message' => 'Success get attendance history',
-                'data' => $attendanceHistory
-            ], 200);
+                    'code' => '200',
+                    'status' => 'OK',
+                    'message' => 'Success get attendance history',
+                    'data' => $attendanceHistory
+                ], 200);
             } else if ($attendanceHistory->count() == 0) {
                 return response()->json([
                     'code' => '404',
                     'status' => 'NOT_FOUND',
                     'message' => 'Belum ada Riwayat Absensi',
                     'data' => []
-                    ], 404);
+                ], 404);
             }
         } catch (Exception $e) {
             return response()->json([
@@ -79,18 +79,18 @@ class AttendanceController extends Controller
                 ], 200);
             } else if (!$dataCheckInToday) {
                 return response()->json([
-                'code' => '404',
-                'status' => 'NOT_FOUND',
-                'message' => 'Belum ada Check In Hari Ini',
-                'data' => null
-            ], 404);
+                    'code' => '404',
+                    'status' => 'NOT_FOUND',
+                    'message' => 'Belum ada Check In Hari Ini',
+                    'data' => null
+                ], 404);
             }
         } catch (\Exception $e) {
             return response()->json([
                 'code' => '500',
                 'status' => 'INTERNAL_SERVER_ERROR',
                 'message' => $e
-        ], 500);
+            ], 500);
         }
     }
 
@@ -116,23 +116,24 @@ class AttendanceController extends Controller
                 ], 200);
             } else if (!$dataCheckOutToday) {
                 return response()->json([
-                'code' => '404',
-                'status' => 'NOT_FOUND',
-                'message' => 'Belum ada Check Out Hari Ini',
-                'data' => null
-            ], 404);
+                    'code' => '404',
+                    'status' => 'NOT_FOUND',
+                    'message' => 'Belum ada Check Out Hari Ini',
+                    'data' => null
+                ], 404);
             }
         } catch (\Exception $e) {
             return response()->json([
                 'code' => '500',
                 'status' => 'INTERNAL_SERVER_ERROR',
                 'message' => $e
-        ], 500);
+            ], 500);
         }
     }
 
 
-    public function getDataOutlet(){
+    public function getDataOutlet()
+    {
         try {
             $employee = DB::table('employees')->where('id', auth()->user()->employee_id)->first();
             $dataOutlet = DB::table('outlets')->where('id', $employee->outlet_id)->first();
@@ -216,7 +217,7 @@ class AttendanceController extends Controller
                 'code' => '400',
                 'status' => 'BAD_REQUEST',
                 'message' => 'Anda tidak memiliki jadwal hari ini',
-                ], 400);
+            ], 400);
         }
 
         $shift = Shift::find($scheduleShift->shift_id);
@@ -258,7 +259,7 @@ class AttendanceController extends Controller
                 'code' => '400',
                 'status' => 'BAD_REQUEST',
                 'message' => 'Anda berada di luar radius',
-            ], 400 );
+            ], 400);
         } else {
             if ($cekAlreadyPresent > 0) {
                 return response()->json([
@@ -320,7 +321,8 @@ class AttendanceController extends Controller
     }
 
 
-    public function isAlreadyCheckIn(){
+    public function isAlreadyCheckIn()
+    {
         try {
             $date = Carbon::now()->format('Y-m-d');
 
@@ -339,29 +341,30 @@ class AttendanceController extends Controller
                 ], 200);
             } else if (!$dataCheckIn) {
                 return response()->json([
-                'code' => '404',
-                'status' => 'NOT_FOUND',
-                'message' => 'Anda belum Check In',
-                'data' => false
-            ], 404);
+                    'code' => '404',
+                    'status' => 'NOT_FOUND',
+                    'message' => 'Anda belum Check In',
+                    'data' => false
+                ], 404);
             }
         } catch (\Exception $e) {
             return response()->json([
                 'code' => '500',
                 'status' => 'INTERNAL_SERVER_ERROR',
                 'message' => $e
-        ], 500);
+            ], 500);
         }
     }
 
 
-    public function isAlreadyPresent(){
+    public function isAlreadyPresent()
+    {
         try {
             $date = Carbon::now()->format('Y-m-d');
 
             $dataCheckIn = DB::table('attendance')
                 ->where('check_in_date', $date)
-                ->where('check_out_date',$date)
+                ->where('check_out_date', $date)
                 ->where('employee_id', auth()->user()->employee_id)
                 ->first();
 
@@ -374,22 +377,23 @@ class AttendanceController extends Controller
                 ], 200);
             } else if (!$dataCheckIn) {
                 return response()->json([
-                'code' => '404',
-                'status' => 'NOT_FOUND',
-                'message' => 'Belum ada Absensi Hari Ini',
-                'data' => false,
-            ], 404);
+                    'code' => '404',
+                    'status' => 'NOT_FOUND',
+                    'message' => 'Belum ada Absensi Hari Ini',
+                    'data' => false,
+                ], 404);
             }
         } catch (\Exception $e) {
             return response()->json([
                 'code' => '500',
                 'status' => 'INTERNAL_SERVER_ERROR',
                 'message' => $e
-        ], 500);
+            ], 500);
         }
     }
 
-    public function checkSchedule(){
+    public function checkSchedule()
+    {
         try {
             $date = Carbon::now()->format('Y-m-d');
             $userEmployee = Employee::with('position')->find(Auth::user()->employee_id);
@@ -404,18 +408,18 @@ class AttendanceController extends Controller
                 ], 200);
             } else if (!$dataSchedule) {
                 return response()->json([
-                'code' => '404',
-                'status' => 'NOT_FOUND',
-                'message' => 'Belum ada Jadwal Hari Ini',
-                'data' => false
-            ], 404);
+                    'code' => '404',
+                    'status' => 'NOT_FOUND',
+                    'message' => 'Belum ada Jadwal Hari Ini',
+                    'data' => false
+                ], 404);
             }
         } catch (\Exception $e) {
             return response()->json([
                 'code' => '500',
                 'status' => 'INTERNAL_SERVER_ERROR',
                 'message' => $e
-        ], 500);
+            ], 500);
         }
     }
 
@@ -423,37 +427,38 @@ class AttendanceController extends Controller
 
 
 
-    public function canCheckOutCheck(){
+    public function canCheckOutCheck()
+    {
         try {
-                $now = Carbon::now();
-                $date = Carbon::now()->format('Y-m-d');
-                $userEmployee = Employee::with('position')->find(Auth::user()->employee_id);
-                $dataUserEmployeeID = $userEmployee->id;
-                $dataSchedule = Schedule::where('employee_id', $dataUserEmployeeID)->where('start_date', '<=', $date)->where('end_date', '>=', $date)->first();
-                $shiftEndTime = Carbon::createFromFormat('H:i:s', $dataSchedule->shift->end_time);
-                $canCheckOut = $shiftEndTime->copy();
-                $canCheckOutCheck = $now >= $canCheckOut;
+            $now = Carbon::now();
+            $date = Carbon::now()->format('Y-m-d');
+            $userEmployee = Employee::with('position')->find(Auth::user()->employee_id);
+            $dataUserEmployeeID = $userEmployee->id;
+            $dataSchedule = Schedule::where('employee_id', $dataUserEmployeeID)->where('start_date', '<=', $date)->where('end_date', '>=', $date)->first();
+            $shiftEndTime = Carbon::createFromFormat('H:i:s', $dataSchedule->shift->end_time);
+            $canCheckOut = $shiftEndTime->copy();
+            $canCheckOutCheck = $now >= $canCheckOut;
 
-                if ($canCheckOutCheck) {
-                    return response()->json([
-                        'code' => '200',
-                        'status' => 'OK',
-                        'message' => 'Can Check Out',
-                        'data' => true
-                    ], 200);
-                } else if (!$canCheckOutCheck) {
-                    return response()->json([
+            if ($canCheckOutCheck) {
+                return response()->json([
+                    'code' => '200',
+                    'status' => 'OK',
+                    'message' => 'Can Check Out',
+                    'data' => true
+                ], 200);
+            } else if (!$canCheckOutCheck) {
+                return response()->json([
                     'code' => '404',
                     'status' => 'NOT_FOUND',
                     'message' => 'Belum bisa Check Out Hari Ini',
                     'data' => false
                 ], 404);
-                }
-            } catch (\Exception $e) {
-                return response()->json([
-                    'code' => '500',
-                    'status' => 'INTERNAL_SERVER_ERROR',
-                    'message' => $e
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'code' => '500',
+                'status' => 'INTERNAL_SERVER_ERROR',
+                'message' => $e
             ], 500);
         }
         // $shiftEndTime = Carbon::createFromFormat('H:i:s', $dataSchedule->shift->end_time);
@@ -477,7 +482,8 @@ class AttendanceController extends Controller
         // }
     }
 
-    public function canCheckInCheck(){
+    public function canCheckInCheck()
+    {
         try {
             $now = Carbon::now();
             $date = Carbon::now()->format('Y-m-d');
@@ -487,28 +493,66 @@ class AttendanceController extends Controller
             $shiftStartTime = Carbon::createFromFormat('H:i:s', $dataSchedule->shift->start_time);
             $canCheckIn = $shiftStartTime->copy()->subMinutes(15);
             $canPresenceCheck = $now >= $canCheckIn;
+            $shiftEndTime = Carbon::createFromFormat('H:i:s', $dataSchedule->shift->end_time);
+            $canCheckOut = $shiftEndTime->copy();
+            $canCheckOutCheck = $now >= $canCheckOut;
+            $isAlreadyCheckIn = DB::table('attendance')->where('check_in_date', $date)->where('check_out_date', null)->where('employee_id', $dataUserEmployeeID)->first() != null;
 
             if ($canPresenceCheck) {
+                if(!$isAlreadyCheckIn ){
+                    return response()->json([
+                        'code' => '200',
+                        'status' => 'OK',
+                        'message' => 'Can Check In',
+                        'data' => true
+                    ], 200);
+                } else {
+                    if($canCheckOutCheck && $isAlreadyCheckIn){
+                        return response()->json([
+                            'code' => '200',
+                            'status' => 'OK',
+                            'message' => 'Can Check Out',
+                            'data' => true
+                        ], 200);
+                    } else {
+                        return response()->json([
+                            'code' => '404',
+                            'status' => 'NOT_FOUND',
+                            'message' => 'Belum Masuk Jam Pulang',
+                            'data' => false
+                        ], 404);
+                    }
+                }
+            } else if (!$canPresenceCheck || $isAlreadyCheckIn) {
+                if(!$canCheckOutCheck && $isAlreadyCheckIn){
+                    return response()->json([
+                        'code' => '404',
+                        'status' => 'NOT_FOUND',
+                        'message' => 'Belum Masuk Jam Pulang',
+                        'data' => false
+                    ], 404);
+                }else{
+                    return response()->json([
+                        'code' => '404',
+                        'status' => 'NOT_FOUND',
+                        'message' => 'Belum Masuk Jam Kerja',
+                        'data' => false
+                    ], 404);
+                }
+            } else {
                 return response()->json([
-                    'code' => '200',
-                    'status' => 'OK',
-                    'message' => 'Can Check In',
-                    'data' => true
-                ], 200);
-            } else if (!$canPresenceCheck) {
-                return response()->json([
-                'code' => '200',
-                'status' => 'OK',
-                'message' => 'Belum masuk jam kerja',
-                'data' => false
-            ], 200);
+                    'code' => '404',
+                    'status' => 'NOT_FOUND',
+                    'message' => 'Anda sudah Check In',
+                    'data' => false
+                ], 404);
             }
         } catch (\Exception $e) {
             return response()->json([
                 'code' => '500',
                 'status' => 'INTERNAL_SERVER_ERROR',
                 'message' => $e
-        ], 500);
+            ], 500);
         }
 
     }

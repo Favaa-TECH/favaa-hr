@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Auth;
 class EmplHistoryController extends Controller
 {
     public function index() {
-        $attendanceHistory = Attendance::where('employee_id',Auth::user()->employee_id)->latest()->paginate(10);
+        // order by date
+        $attendanceHistory = Attendance::where('employee_id',Auth::user()->employee_id)->orderBy('date','desc')->paginate(10);
         return view('employee.history',[
             'attendanceHistory' => $attendanceHistory
         ]);

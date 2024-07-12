@@ -41,6 +41,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
     require __DIR__.'/v2/attendance.php';
     require __DIR__.'/v2/employee.php';
+    require __DIR__.'/v2/leave.php';
 });
 
 

@@ -24,7 +24,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <h6>Tanggal Mulai</h6>
-                            <p>{{ $permissionStartDate,
+                            <p>{{ $permissionStartDate
                             }}</p>
                         </div>
                         <div class="col-md-6 mb-3">
