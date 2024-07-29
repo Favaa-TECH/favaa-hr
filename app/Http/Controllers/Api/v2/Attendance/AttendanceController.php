@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Shift;
 use App\Models\Employee;
 use App\Models\Schedule;
+use App\Models\Attendance;
 use Illuminate\Http\Request;
 use App\Models\LateTolerance;
 use App\Models\ClockInTolerance;
@@ -55,6 +56,31 @@ class AttendanceController extends Controller
             ], 500);
         }
     }
+
+    public function getHistory($id)
+{
+    try {
+        // Define the number of items per page
+        $perPage = 10;
+
+        // Fetch the attendance records with pagination
+        $attendance = Attendance::where('employee_id', $id)->paginate($perPage);
+
+        if ($attendance->total() > 0) {
+            return response()->json([
+                'status' => 'success',
+                'data' => $attendance
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'data history tidak ditemukan'
+            ], 404);
+        }
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'An error occurred'], 500);
+    }
+}
 
 
     public function getCheckInToday()

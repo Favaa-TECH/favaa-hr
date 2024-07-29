@@ -120,4 +120,19 @@ class Attendances extends Component
         $this->check_out_latitude = $attendanceData->check_out_latitude;
         $this->check_out_longitude = $attendanceData->check_out_longitude;
     }
+
+
+    public function updateSStatus(){
+        $this->validate([
+            'status' => 'required'
+        ]);
+
+        Attendance::where('id', $this->employee_id)->update([
+            'status' => $this->status
+        ]);
+
+        $this->dispatch('success', [
+            'message' => 'Berhasil memperbarui status kehadiran.'
+        ]);
+    }
 }

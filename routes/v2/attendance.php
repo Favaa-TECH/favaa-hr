@@ -15,6 +15,7 @@ Route::controller(AttendanceController::class)->group(function () {
     Route::get('v2/attendance/isAlreadyCheckIn', 'isAlreadyCheckIn');
     Route::get('v2/attendance/isAlreadyPresent', 'isAlreadyPresent');
     Route::get('v2/attendance/checkSchedule', 'checkSchedule');
+    Route::get('v2/attendance/getHistory/{id}', 'getHistory');
 
 });
 

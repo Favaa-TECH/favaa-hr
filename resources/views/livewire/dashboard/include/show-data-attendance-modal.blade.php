@@ -22,8 +22,19 @@
                         <p>{{ $check_out_time }}</p>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <h6>Status</h6>
-                        <p>{{ $status }}</p>
+                        <h6 >Status</h6>
+                        <div class="d-flex">
+                            <p class="me-2">{{ $status }}</p> |
+                            <select wire:model='status' name="" id="" class="form-control me-2 ms-2 text-center" style="height: 30px;  padding: 0 0 0 0; width: 80px">
+                                <option value="Absent"> Absent</option>
+                                <option value="Holiday"> Holiday</option>
+                                <option value="Present"> Present</option>
+                                <option value="Leave"> Leave</option>
+                                <option value="Late"> Late</option>
+                            </select>
+                            <h6> <span wire:click='updateSStatus' class="me-2 badge bg-primary cursor-pointer">change</span></h6>
+                        </div>
+
                     </div>
 
                     <div class="col-md-6 mb-3">

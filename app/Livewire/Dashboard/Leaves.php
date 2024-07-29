@@ -5,6 +5,7 @@ namespace App\Livewire\Dashboard;
 use Carbon\Carbon;
 use App\Models\Leave;
 use Livewire\Component;
+use App\Models\Attendance;
 use Livewire\WithPagination;
 use Livewire\Attributes\Rule;
 
@@ -26,9 +27,11 @@ class Leaves extends Component
     public $leavetype;
     public $EmployeeName;
     public $leaveAttachment;
+    public $employeeId;
 
     public function showModalLeave($id){
         $this->leaveId = $id;
+        $this->employeeId = $id;
         $leave = Leave::with('employee')->find($id);
         $this->leaveStatus = $leave->status;
         $this->leaveReason = $leave->leave_reason;
@@ -43,6 +46,16 @@ class Leaves extends Component
         Leave::where('id',$this->leaveId)->update([
             'status' => 'approved'
         ]);
+
+        $leave = Leave::find($this->leaveId);
+        $leave_start_date = $leave->start_date;
+        $leave_end_date = $leave->end_date;
+
+        Attendance::where('employee_id', $this->employeeId)
+        ->whereBetween('check_in_date', [$leave_start_date, $leave_end_date])
+        ->where('status', 'absent')
+        ->update(['status' => 'leave']);
+
         $this->dispatch('success',[
             'message' => 'Pengajuan cuti berhasil disetujui'
         ]);
