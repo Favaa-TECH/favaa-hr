@@ -15,7 +15,8 @@ class LeaveController extends Controller
         try {
 
             $request->validate([
-                'start_date' => 'required|date',
+                'employee_id' => 'required|exists:employees,id',
+                'start_date' => 'required|date|after_or_equal:today',
                 'end_date' => 'required|date|after_or_equal:start_date',
                 'leave_type' => 'required|string',
                 'leave_reason' => 'required|string',
